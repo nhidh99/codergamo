@@ -10,8 +10,4 @@ public record Adult(@JsonProperty("name") String name, @JsonProperty("age") Inte
             throw new IllegalArgumentException("Are you sure?");
         }
     }
-
-    public static Adult fromUnknownName(Integer age) {
-        return new Adult("Secret Agent Name", age);
-    }
 }

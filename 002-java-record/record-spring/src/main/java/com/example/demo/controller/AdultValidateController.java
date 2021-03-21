@@ -16,7 +16,7 @@ public class AdultValidateController {
 
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<String> faultAdultHandler(IllegalArgumentException e) {
-        System.out.println("New kid: " + this.toString());
+        System.out.println("New kid!");
         return ResponseEntity.badRequest().body(e.getMessage());
     }
 }
