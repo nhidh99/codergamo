@@ -1,40 +1,40 @@
 <html>
-	<title>Undo Redo Pane Demo</title>
-	<head>
-		<link rel="stylesheet" href="style.css" />
-		<script src="script.js"></script>
-	</head>
-	<body>
-		<main class="main">
-			<div id="pane" class="pane" style="background-color: white"></div>
+    <title>Undo Redo Pane Demo</title>
+    <head>
+        <link rel="stylesheet" href="style.css" />
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <main class="main">
+            <div id="pane" class="pane" style="background-color: white"></div>
 
-			<ul class="color-container">
-				<li
-					class="color-item"
-					onclick="changeColor()"
-					style="background-color: red"
-				></li>
-				<li
-					class="color-item"
-					onclick="changeColor()"
-					style="background-color: green"
-				></li>
-				<li
-					class="color-item"
-					onclick="changeColor()"
-					style="background-color: blue"
-				></li>
-				<li
-					class="color-item"
-					onclick="changeColor()"
-					style="background-color: yellow"
-				></li>
-			</ul>
+            <ul class="color-container">
+                <li
+                    class="color-item"
+                    onclick="changeColor()"
+                    style="background-color: red"
+                ></li>
+                <li
+                    class="color-item"
+                    onclick="changeColor()"
+                    style="background-color: green"
+                ></li>
+                <li
+                    class="color-item"
+                    onclick="changeColor()"
+                    style="background-color: blue"
+                ></li>
+                <li
+                    class="color-item"
+                    onclick="changeColor()"
+                    style="background-color: yellow"
+                ></li>
+            </ul>
 
-			<div class="button-container">
-				<button class="button" onclick="undoColor()">Undo</button>
-				<button class="button" onclick="redoColor()">Redo</button>
-			</div>
-		</main>
-	</body>
+            <div class="button-container">
+                <button class="button" onclick="undoColor()">Undo</button>
+                <button class="button" onclick="redoColor()">Redo</button>
+            </div>
+        </main>
+    </body>
 </html>

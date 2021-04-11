@@ -1,35 +1,34 @@
 .main {
-	margin: 0 auto;
-	width: 500px;
+    margin: 0 auto;
+    width: 500px;
 }
 
 .pane {
-	border: 1px solid black;
-	height: 500px;
+    border: 1px solid black;
+    height: 500px;
 }
 
 .color-container {
-	list-style-type: none;	
-	width: 100%;
-	display: flex;
-	padding: 0;
-	gap: 10px;
+    list-style-type: none;
+    width: 100%;
+    display: flex;
+    padding: 0;
+    gap: 10px;
 }
 
 .color-item {
-	height: 50px;
-	width: 100%;
-	border: 1px solid black;
+    height: 50px;
+    width: 100%;
+    border: 1px solid black;
 }
 
-
 .button-container {
-	width: 100%;
-	display: flex;
-	gap: 10px;
+    width: 100%;
+    display: flex;
+    gap: 10px;
 }
 
 .button {
-	width: 100%;
-	padding: 10px 0;
+    width: 100%;
+    padding: 10px 0;
 }
