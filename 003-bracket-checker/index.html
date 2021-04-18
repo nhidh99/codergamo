@@ -1,0 +1,21 @@
+<html>
+    <head>
+        <title>Bracket checker</title>
+        <script src="script.js"></script>
+    </head>
+
+    <body>
+        <label>
+            Insert brackets:
+            <input
+                id="string"
+                onkeypress="return allowBrackets(event)"
+                type="text"
+                autofocus
+                placeholder="Insert brackets only"
+            />
+        </label>
+
+        <button onclick="checkBrackets()">Check</button>
+    </body>
+</html>
