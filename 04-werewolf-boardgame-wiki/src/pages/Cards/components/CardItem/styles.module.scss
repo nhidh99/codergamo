@@ -1,0 +1,14 @@
+.card {
+    border-radius: 10px;
+    padding: 20px 18px 20px 20px;
+    position: relative;
+    box-shadow: inset 0px 0 1px gray, inset 0px 0 1px #29313b, inset 0px 0 20px gray,
+        inset 0px 0 20px #29313b;
+    user-select: none;
+    cursor: pointer;
+    aspect-ratio: 14/19;
+}
+
+.img {
+    width: 100%;
+}

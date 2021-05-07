@@ -1,0 +1,24 @@
+.div {
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+
+    @media (min-width: 1024px) {
+        gap: 20px;
+        flex-direction: row;
+    }
+}
+
+.icon {
+    font-size: 60px;
+
+    @media (min-width: 1024px) {
+        margin-bottom: -5px;
+        font-size: 50px;
+    }
+}
+
+.p {
+    margin: 0;
+}

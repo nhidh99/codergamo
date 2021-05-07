@@ -1,0 +1,26 @@
+.link {
+    height: 100%;
+    width: 100%;
+    text-align: center;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+
+    &:hover {
+        background-color: #485461;
+    }
+
+    &:not(:first-of-type) {
+        border-top: 1px solid gray;
+    }
+
+    @media (min-width: 1024px) {
+        &:not(:first-of-type) {
+			border-top: unset;
+            border-left: 1px solid gray;
+        }
+    }
+}

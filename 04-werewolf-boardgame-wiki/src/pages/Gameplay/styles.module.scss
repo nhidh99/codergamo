@@ -1,0 +1,10 @@
+.section {
+    &:not(:last-of-type) {
+        margin-bottom: 40px;
+    }
+}
+
+.h2 {
+    text-align: center;
+    padding: 10px;
+}

@@ -1,0 +1,10 @@
+.app {
+	background-color: #29313b;
+	min-height: 100vh;
+}
+
+.container {
+	padding-top: 50px;
+	min-height: calc(100vh - 50px);
+	display: flex;
+}

@@ -1,0 +1,23 @@
+.cards {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+
+    @media (min-width: 640px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+    }
+
+    @media (min-width: 1280px) {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+}
+
+.search {
+    div {
+		margin: 0;
+        border-color: white !important;
+        color: white;
+    }
+}

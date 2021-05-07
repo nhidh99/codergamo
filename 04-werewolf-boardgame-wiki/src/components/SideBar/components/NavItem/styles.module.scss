@@ -1,0 +1,21 @@
+.li {
+    border-top: 1px solid gray;
+    border-right: 1px solid gray;
+    height: calc(100% / 3);
+}
+
+.link {
+    text-align: center;
+    color: whitesmoke;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    justify-content: center;
+    padding: 0 10px;
+    height: 100%;
+    font-size: 14px;
+
+    &:hover {
+        background-color: #485461;
+    }
+}

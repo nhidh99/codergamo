@@ -1,0 +1,23 @@
+.div {
+    position: fixed;
+    background-color: #29313b;
+    bottom: 20px;
+    right: 20px;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    padding: 20px;
+    border-radius: 50%;
+    z-index: 10;
+    border: 1px solid #777;
+    cursor: pointer;
+
+    @media (min-width: 1280px) {
+        bottom: 30px;
+        right: 30px;
+    }
+}
+
+.icon {
+    font-size: 20px;
+}

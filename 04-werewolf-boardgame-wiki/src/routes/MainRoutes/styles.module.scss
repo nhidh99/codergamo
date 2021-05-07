@@ -1,0 +1,22 @@
+.main {
+    width: 100%;
+}
+
+.container {
+    margin: 0;
+    padding: 40px;
+    width: unset;
+
+    @media (min-width: 1024px) {
+        width: 800px;
+        margin: 0 auto;
+        padding: 40px 0px 40px 100px;
+    }
+
+
+    @media (min-width: 1280px) {
+        width: 1080px;
+        margin: 0 auto;
+        padding: 40px 0px 40px 100px;
+    }
+}
