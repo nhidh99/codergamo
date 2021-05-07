@@ -1,0 +1,11 @@
+.menu {
+    margin-right: 30px;
+	cursor: pointer;
+    @media (min-width: 1024px) {
+        display: none;
+    }
+}
+
+.icon {
+	margin-bottom: -3px;
+}

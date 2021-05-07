@@ -47,7 +47,6 @@ export default function CardSearch() {
             fullWidth
             label="Find a card"
             variant="outlined"
-            autoFocus
         />
     );
 }
