@@ -1,6 +1,6 @@
 import { makeStyles } from "@material-ui/core/styles";
 import TextField from "@material-ui/core/TextField";
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { filterResult, resetResult } from "../../../../redux/slices/CardResultSlice";
 
@@ -36,10 +36,6 @@ const useStyles = makeStyles((theme) => ({
 export default function CardSearch() {
     const dispatch = useDispatch();
     const classes = useStyles();
-
-    useEffect(() => {
-        dispatch(resetResult());
-    }, []);
 
     return (
         <TextField
