@@ -6,6 +6,15 @@
     position: fixed;
     height: 100%;
     user-select: none;
-	z-index: 10;
-	background-color: #29313b;
+    z-index: 10;
+    background-color: #29313b;
+    right: 0;
+    border-left: 1px solid gray;
+
+	@media (min-width: 1024px) {
+		left: 0;
+		right: unset;
+		border-right: 1px solid gray;
+		border-left: none;
+	}
 }
