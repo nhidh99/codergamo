@@ -2,14 +2,7 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 
 function LocationForm() {
-    const { 
-        state, 
-        onCitySelect, 
-        onDistrictSelect, 
-        onWardSelect, 
-        onSubmit 
-    } = useLocationForm(true);
-
+    const { state, onCitySelect, onDistrictSelect, onWardSelect, onSubmit } = useLocationForm(true);
     const {
         cityOptions,
         districtOptions,
@@ -21,7 +14,6 @@ function LocationForm() {
 
     return (
         <form
-            id="form"
             onSubmit={onSubmit}
             className="w-11/12 p-5 mx-auto mt-10 bg-gray-100 border-2 rounded md:w-2/3 sm:w-3/4 lg:w-1/2 xl:w-1/3"
         >
