@@ -3,94 +3,145 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { PATHS } from "../constants/paths";
 
-async function fetchCities() {
-    const response = await axios.get(PATHS.CITIES);
-    return response.data["data"];
-}
-
-async function fetchDistricts(cityId) {
-    const response = await axios.get(`${PATHS.DISTRICTS}/${cityId}.json`);
-    return response.data["data"];
-}
-
-async function fetchWards(districtId) {
-    const response = await axios.get(`${PATHS.WARDS}/${districtId}.json`);
-    return response.data["data"];
-}
-
-const STEPS = {
-    LOAD_CITIES: "LOAD_CITIES",
-    LOAD_DISTRICTS: "LOAD_DISTRICTS",
-    LOAD_WARDS: "LOAD_WARDS",
+const FETCH_TYPE = {
+    CITIES: "FETCH_CITIES",
+    DISTRICTS: "FETCH_DISTRICTS",
+    WARDS: "FETCH_WARDS",
+    INIT: "FETCH_INIT",
 };
 
-function useLocationSelects() {
+async function getLocationOptions(fetchType, locationId) {
+    if (fetchType !== FETCH_TYPE.CITIES && !locationId) {
+        return [];
+    }
+
+    let url;
+    switch (fetchType) {
+        case FETCH_TYPE.CITIES: {
+            url = PATHS.CITIES;
+            break;
+        }
+        case FETCH_TYPE.DISTRICTS: {
+            url = `${PATHS.DISTRICTS}/${locationId}.json`;
+            break;
+        }
+        case FETCH_TYPE.WARDS: {
+            url = `${PATHS.WARDS}/${locationId}.json`;
+            break;
+        }
+        default: {
+            return [];
+        }
+    }
+    const locations = (await axios.get(url)).data["data"];
+    return locations.map(({ id, name }) => ({ value: id, label: name }));
+}
+
+function useLocationSelects(initialLocation) {
     const [state, setState] = useState({
-        cities: [],
-        districts: [],
-        wards: [],
-        param: null,
-        step: STEPS.LOAD_CITIES,
+        cityOptions: [],
+        districtOptions: [],
+        wardOptions: [],
+        selectedCity: initialLocation?.initCity,
+        selectedDistrict: initialLocation?.initDistrict,
+        selectedWard: initialLocation?.initWard,
+        paramId: null,
+        fetchType: FETCH_TYPE.INIT,
     });
 
+    const { paramId, fetchType } = state;
+
     useEffect(() => {
-        async function loadLocation() {
-            switch (state.step) {
-                case STEPS.LOAD_CITIES: {
-                    const cities = await fetchCities();
-                    setState({ ...state, cities: cities, step: null });
+        async function loadInitialLocation(location) {
+            const { initCity, initDistrict, initWard } = location;
+            const [cityOptions, districtOptions, wardOptions] = await Promise.all([
+                getLocationOptions(FETCH_TYPE.CITIES),
+                getLocationOptions(FETCH_TYPE.DISTRICTS, initCity?.value),
+                getLocationOptions(FETCH_TYPE.WARDS, initDistrict?.value),
+            ]);
+
+            setState({
+                ...state,
+                selectedCity: initCity,
+                selectedDistrict: initDistrict,
+                selectedWard: initWard,
+                cityOptions: cityOptions,
+                districtOptions: districtOptions,
+                wardOptions: wardOptions,
+            });
+        }
+
+        if (initialLocation) {
+            loadInitialLocation(initialLocation);
+        } else {
+            setState({ ...state, fetchType: FETCH_TYPE.CITIES });
+        }
+    }, []);
+
+    useEffect(() => {
+        (async function loadLocation() {
+            const options = await getLocationOptions(fetchType, paramId);
+            switch (fetchType) {
+                case FETCH_TYPE.CITIES: {
+                    setState({ ...state, cityOptions: options });
                     break;
                 }
-                case STEPS.LOAD_DISTRICTS: {
-                    const districts = await fetchDistricts(state.param);
-                    setState({ ...state, districts: districts, step: null });
+                case FETCH_TYPE.DISTRICTS: {
+                    setState({ ...state, districtOptions: options });
                     break;
                 }
-                case STEPS.LOAD_WARDS: {
-                    const wards = await fetchWards(state.param);
-                    setState({ ...state, wards: wards, step: null });
+                case FETCH_TYPE.WARDS: {
+                    setState({ ...state, wardOptions: options });
                     break;
                 }
                 default: {
                     return;
                 }
             }
-        }
+        })();
+    }, [fetchType, paramId]);
 
-        loadLocation();
-    }, [state.step]);
-
-    function onCitySelect(cityId) {
+    function onCitySelect(option) {
         setState({
             ...state,
-            districts: [],
-            wards: [],
-            step: STEPS.LOAD_DISTRICTS,
-            param: cityId,
+            districtOptions: [],
+            wardOptions: [],
+            fetchType: FETCH_TYPE.DISTRICTS,
+            selectedCity: option,
+            selectedDistrict: null,
+            selectedWard: null,
+            paramId: option.value,
         });
     }
 
-    function onDistrictSelect(districtId) {
+    function onDistrictSelect(option) {
         setState({
             ...state,
-            wards: [],
-            step: STEPS.LOAD_WARDS,
-            param: districtId,
+            wardOptions: [],
+            fetchType: FETCH_TYPE.WARDS,
+            selectedDistrict: option,
+            selectedWard: null,
+            paramId: option.value,
         });
+    }
+
+    function onWardSelect(option) {
+        setState({ ...state, selectedWard: option });
     }
 
     function onSubmit(e) {
         e.preventDefault();
-        const elements = document.getElementById("form").elements;
-        const data = {};
-        for (let i = 0; i < elements.length - 1; i++) {
-            var item = elements.item(i);
-            data[item.name] = item.value;
-        }
-        alert(JSON.stringify(data));
+        const { selectedCity, selectedDistrict, selectedWard } = state;
+        const json = JSON.stringify({
+            initCity: selectedCity,
+            initDistrict: selectedDistrict,
+            initWard: selectedWard,
+        });
+        localStorage.setItem("location", json);
+        window.location.reload();
     }
 
-    return { state, onCitySelect, onDistrictSelect, onSubmit };
+    return { state, onCitySelect, onDistrictSelect, onWardSelect, onSubmit };
 }
 
 export default useLocationSelects;
