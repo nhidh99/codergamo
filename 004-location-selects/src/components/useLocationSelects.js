@@ -10,7 +10,7 @@ const FETCH_TYPE = {
     INIT: "FETCH_INIT",
 };
 
-async function getLocationOptions(fetchType, locationId) {
+async function fetchLocationOption(fetchType, locationId) {
     if (fetchType !== FETCH_TYPE.CITIES && !locationId) {
         return [];
     }
@@ -37,14 +37,14 @@ async function getLocationOptions(fetchType, locationId) {
     return locations.map(({ id, name }) => ({ value: id, label: name }));
 }
 
-function useLocationSelects(initialLocation) {
+function useLocationSelects(shouldFetchInitialLocation) {
     const [state, setState] = useState({
         cityOptions: [],
         districtOptions: [],
         wardOptions: [],
-        selectedCity: initialLocation?.initCity,
-        selectedDistrict: initialLocation?.initDistrict,
-        selectedWard: initialLocation?.initWard,
+        selectedCity: null,
+        selectedDistrict: null,
+        selectedWard: null,
         paramId: null,
         fetchType: FETCH_TYPE.INIT,
     });
@@ -52,35 +52,34 @@ function useLocationSelects(initialLocation) {
     const { paramId, fetchType } = state;
 
     useEffect(() => {
-        async function loadInitialLocation(location) {
-            const { initCity, initDistrict, initWard } = location;
+        if (!shouldFetchInitialLocation) {
+            setState({ ...state, fetchType: FETCH_TYPE.CITIES });
+            return;
+        }
+
+        (async function loadInitialLocation() {
+            const { cityId, districtId, wardId } = (await axios.get(PATHS.LOCATION)).data;
             const [cityOptions, districtOptions, wardOptions] = await Promise.all([
-                getLocationOptions(FETCH_TYPE.CITIES),
-                getLocationOptions(FETCH_TYPE.DISTRICTS, initCity?.value),
-                getLocationOptions(FETCH_TYPE.WARDS, initDistrict?.value),
+                fetchLocationOption(FETCH_TYPE.CITIES),
+                fetchLocationOption(FETCH_TYPE.DISTRICTS, cityId),
+                fetchLocationOption(FETCH_TYPE.WARDS, districtId),
             ]);
 
             setState({
                 ...state,
-                selectedCity: initCity,
-                selectedDistrict: initDistrict,
-                selectedWard: initWard,
                 cityOptions: cityOptions,
                 districtOptions: districtOptions,
                 wardOptions: wardOptions,
+                selectedCity: cityOptions.find((c) => c.value === cityId),
+                selectedDistrict: districtOptions.find((d) => d.value === districtId),
+                selectedWard: wardOptions.find((w) => w.value === wardId),
             });
-        }
-
-        if (initialLocation) {
-            loadInitialLocation(initialLocation);
-        } else {
-            setState({ ...state, fetchType: FETCH_TYPE.CITIES });
-        }
+        })();
     }, []);
 
     useEffect(() => {
         (async function loadLocation() {
-            const options = await getLocationOptions(fetchType, paramId);
+            const options = await fetchLocationOption(fetchType, paramId);
             switch (fetchType) {
                 case FETCH_TYPE.CITIES: {
                     setState({ ...state, cityOptions: options });

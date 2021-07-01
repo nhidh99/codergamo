@@ -1,8 +1,6 @@
 import useLocationSelects from "./useLocationSelects";
 import Select from "react-select";
 
-const initialLocation = JSON.parse(localStorage.getItem("location")) ?? null;
-
 function LocationForm() {
     const { 
         state, 
@@ -10,7 +8,7 @@ function LocationForm() {
         onDistrictSelect, 
         onWardSelect, 
         onSubmit 
-    } = useLocationSelects(initialLocation);
+    } = useLocationSelects(true);
 
     const {
         cityOptions,
@@ -20,8 +18,6 @@ function LocationForm() {
         selectedDistrict,
         selectedWard,
     } = state;
-
-    console.log(initialLocation);
 
     return (
         <form
