@@ -11,10 +11,6 @@ const FETCH_TYPE = {
 };
 
 async function fetchLocationOption(fetchType, locationId) {
-    if (fetchType !== FETCH_TYPE.CITIES && !locationId) {
-        return [];
-    }
-
     let url;
     switch (fetchType) {
         case FETCH_TYPE.CITIES: {
@@ -130,13 +126,6 @@ function useLocationSelects(shouldFetchInitialLocation) {
 
     function onSubmit(e) {
         e.preventDefault();
-        const { selectedCity, selectedDistrict, selectedWard } = state;
-        const json = JSON.stringify({
-            initCity: selectedCity,
-            initDistrict: selectedDistrict,
-            initWard: selectedWard,
-        });
-        localStorage.setItem("location", json);
         window.location.reload();
     }
 
