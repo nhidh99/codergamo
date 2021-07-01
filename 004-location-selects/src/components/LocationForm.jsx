@@ -21,6 +21,8 @@ function LocationForm() {
         selectedWard,
     } = state;
 
+    console.log(initialLocation);
+
     return (
         <form
             id="form"
