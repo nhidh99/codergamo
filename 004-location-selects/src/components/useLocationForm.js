@@ -33,7 +33,7 @@ async function fetchLocationOption(fetchType, locationId) {
     return locations.map(({ id, name }) => ({ value: id, label: name }));
 }
 
-function useLocationSelects(shouldFetchInitialLocation) {
+function useLocationForm(shouldFetchInitialLocation) {
     const [state, setState] = useState({
         cityOptions: [],
         districtOptions: [],
@@ -132,4 +132,4 @@ function useLocationSelects(shouldFetchInitialLocation) {
     return { state, onCitySelect, onDistrictSelect, onWardSelect, onSubmit };
 }
 
-export default useLocationSelects;
+export default useLocationForm;

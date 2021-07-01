@@ -1,4 +1,4 @@
-import useLocationSelects from "./useLocationSelects";
+import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 
 function LocationForm() {
@@ -8,7 +8,7 @@ function LocationForm() {
         onDistrictSelect, 
         onWardSelect, 
         onSubmit 
-    } = useLocationSelects(true);
+    } = useLocationForm(true);
 
     const {
         cityOptions,
