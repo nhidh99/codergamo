@@ -20,7 +20,6 @@ function LocationForm() {
             <div className="flex flex-col gap-5">
                 <Select
                     name="cityId"
-                    key={`cityId_${selectedCity?.value}`}
                     isDisabled={cityOptions.length === 0}
                     options={cityOptions}
                     onChange={(option) => onCitySelect(option)}
@@ -29,8 +28,8 @@ function LocationForm() {
                 />
 
                 <Select
-                    key={`districtId_${selectedDistrict?.value}`}
                     name="districtId"
+                    key={`districtId_${selectedDistrict?.value}`}
                     isDisabled={districtOptions.length === 0}
                     options={districtOptions}
                     onChange={(option) => onDistrictSelect(option)}
@@ -39,8 +38,8 @@ function LocationForm() {
                 />
 
                 <Select
-                    key={`wardId_${selectedWard?.value}`}
                     name="wardId"
+                    key={`wardId_${selectedWard?.value}`}
                     isDisabled={wardOptions.length === 0}
                     options={wardOptions}
                     placeholder="Phường/Xã"
