@@ -2,7 +2,9 @@ import useLocationForm from "./useLocationForm";
 import Select from "react-select";
 
 function LocationForm() {
-    const { state, onCitySelect, onDistrictSelect, onWardSelect, onSubmit } = useLocationForm(true);
+    const { state, onCitySelect, onDistrictSelect, onWardSelect, onSubmit } =
+        useLocationForm(true);
+        
     const {
         cityOptions,
         districtOptions,
@@ -20,6 +22,7 @@ function LocationForm() {
             <div className="flex flex-col gap-5">
                 <Select
                     name="cityId"
+                    key={`cityId_${selectedCity?.value}`}
                     isDisabled={cityOptions.length === 0}
                     options={cityOptions}
                     onChange={(option) => onCitySelect(option)}
@@ -48,7 +51,10 @@ function LocationForm() {
                 />
             </div>
 
-            <button type="submit" className="w-full p-2 mt-4 text-white bg-blue-900 rounded">
+            <button
+                type="submit"
+                className="w-full p-2 mt-4 text-white bg-blue-900 rounded"
+            >
                 Xác nhận
             </button>
         </form>

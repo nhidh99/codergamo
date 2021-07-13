@@ -7,7 +7,6 @@ const FETCH_TYPES = {
     CITIES: "FETCH_CITIES",
     DISTRICTS: "FETCH_DISTRICTS",
     WARDS: "FETCH_WARDS",
-    INIT: "FETCH_INIT",
 };
 
 async function fetchLocationOptions(fetchType, locationId) {
@@ -40,7 +39,6 @@ async function fetchInitialData() {
         fetchLocationOptions(FETCH_TYPES.DISTRICTS, cityId),
         fetchLocationOptions(FETCH_TYPES.WARDS, districtId),
     ]);
-
     return {
         cityOptions: cities,
         districtOptions: districts,
@@ -59,54 +57,46 @@ function useLocationForm(shouldFetchInitialLocation) {
         selectedCity: null,
         selectedDistrict: null,
         selectedWard: null,
-        paramId: null,
-        fetchType: shouldFetchInitialLocation ? FETCH_TYPES.INIT : FETCH_TYPES.CITIES,
     });
 
-    const { paramId, fetchType } = state;
+    const { selectedCity, selectedDistrict } = state;
 
     useEffect(() => {
         (async function () {
-            if (fetchType === FETCH_TYPES.INIT) {
+            if (shouldFetchInitialLocation) {
                 const initialData = await fetchInitialData();
-                setState({ ...state, ...initialData });
+                setState(initialData);
+            } else {
+                const options = await fetchLocationOptions(FETCH_TYPES.CITIES)
+                setState({ ...state, cityOptions: options })
             }
         })();
     }, []);
 
     useEffect(() => {
         (async function () {
-            const options = await fetchLocationOptions(fetchType, paramId);
-            switch (fetchType) {
-                case FETCH_TYPES.CITIES: {
-                    setState({ ...state, cityOptions: options });
-                    break;
-                }
-                case FETCH_TYPES.DISTRICTS: {
-                    setState({ ...state, districtOptions: options });
-                    break;
-                }
-                case FETCH_TYPES.WARDS: {
-                    setState({ ...state, wardOptions: options });
-                    break;
-                }
-                default: {
-                    return;
-                }
-            }
+            if (!selectedCity) return;
+            const options = await fetchLocationOptions(FETCH_TYPES.DISTRICTS, selectedCity.value);
+            setState({ ...state, districtOptions: options })
         })();
-    }, [fetchType, paramId]);
+    }, [selectedCity]);
+
+    useEffect(() => {
+        (async function () {
+            if (!selectedDistrict) return;
+            const options = await fetchLocationOptions(FETCH_TYPES.WARDS, selectedDistrict.value);
+            setState({ ...state, wardOptions: options })
+        })()
+    }, [selectedDistrict])
 
     function onCitySelect(option) {
         setState({
             ...state,
             districtOptions: [],
             wardOptions: [],
-            fetchType: FETCH_TYPES.DISTRICTS,
             selectedCity: option,
             selectedDistrict: null,
             selectedWard: null,
-            paramId: option.value,
         });
     }
 
@@ -114,10 +104,8 @@ function useLocationForm(shouldFetchInitialLocation) {
         setState({
             ...state,
             wardOptions: [],
-            fetchType: FETCH_TYPES.WARDS,
             selectedDistrict: option,
             selectedWard: null,
-            paramId: option.value,
         });
     }
 
