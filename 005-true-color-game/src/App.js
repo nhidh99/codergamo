@@ -1,5 +1,4 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import './App.css';
 import PATHS from "./constants/paths";
 import HomePage from "./pages/HomePage";
 import PlayPage from "./pages/PlayPage";

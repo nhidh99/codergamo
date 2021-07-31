@@ -10,6 +10,7 @@ const TIME_OUT_MILISECONDS = 2000
 
 const usePlayPage = () => {
     const pendingTextIndex = useRef(0)
+    const quizIndex = useRef(0)
     const timeout = useRef(null)
     const quizPool = useRef([])
 
@@ -22,10 +23,11 @@ const usePlayPage = () => {
         curQuiz: null,
     })
 
-    const { status, score, best, quizIndex, curQuiz } = state;
+    const { status, score, best, curQuiz } = state;
 
     useEffect(() => {
         const prepareColorPool = () => {
+            quizPool.current = []
             for (let i = 0; i < POOL_SIZE; i++) {
                 let colorQuiz;
                 const colorIndex = Math.floor(Math.random() * COLOR_TEXTS.length)
@@ -89,6 +91,7 @@ const usePlayPage = () => {
             if (timeout.current) {
                 clearTimeout(timeout.current)
             }
+
         }
 
         switch (status) {
@@ -122,21 +125,12 @@ const usePlayPage = () => {
     }
 
     const pressTrue = () => {
-        console.log(status)
         if (status === "RUNNING") {
             if (curQuiz.isTrueColor) {
-                const newQuizIndex = quizIndex === POOL_SIZE - 1 ? 0 : quizIndex + 1
-                const newQuiz = quizPool.current[newQuizIndex]
-                setState({
-                    ...state,
-                    score: score + 1,
-                    text: newQuiz.textDisplay,
-                    quizIndex: newQuizIndex,
-                    curQuiz: newQuiz
-                })
+                nextQuestion();
             } else {
                 clearTimeout(timeout.current)
-                setState({ ...state, status: "OVER", })
+                setState({ ...state, status: "OVER" })
             }
         }
     }
@@ -144,21 +138,25 @@ const usePlayPage = () => {
     const pressFalse = () => {
         if (status === "RUNNING") {
             if (!curQuiz.isTrueColor) {
-                const newQuizIndex = quizIndex === POOL_SIZE - 1 ? 0 : quizIndex + 1
-                const newQuiz = quizPool.current[newQuizIndex]
-                setState({
-                    ...state,
-                    score: score + 1,
-                    text: newQuiz.textDisplay,
-                    quizIndex: newQuizIndex,
-                    curQuiz: newQuiz
-                })
+                nextQuestion()
             } else {
                 clearTimeout(timeout.current)
                 setState({ ...state, status: "OVER" })
             }
         }
     }
+
+    const nextQuestion = () => {
+        quizIndex.current = quizIndex.current === POOL_SIZE - 1 ? 0 : quizIndex.current + 1
+        const newQuiz = quizPool.current[quizIndex.current]
+        setState({
+            ...state,
+            score: score + 1,
+            text: newQuiz.textDisplay,
+            curQuiz: newQuiz
+        })
+    }
+
 
     return { state, pressTrue, pressFalse, pressAgain }
 }
