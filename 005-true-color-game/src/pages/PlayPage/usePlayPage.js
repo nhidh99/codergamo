@@ -127,7 +127,14 @@ const usePlayPage = () => {
     const pressTrue = () => {
         if (status === "RUNNING") {
             if (curQuiz.isTrueColor) {
-                nextQuestion();
+                quizIndex.current = quizIndex.current === POOL_SIZE - 1 ? 0 : quizIndex.current + 1
+                const newQuiz = quizPool.current[quizIndex.current]
+                setState({
+                    ...state,
+                    score: score + 1,
+                    text: newQuiz.textDisplay,
+                    curQuiz: newQuiz
+                })
             } else {
                 clearTimeout(timeout.current)
                 setState({ ...state, status: "OVER" })
@@ -138,25 +145,20 @@ const usePlayPage = () => {
     const pressFalse = () => {
         if (status === "RUNNING") {
             if (!curQuiz.isTrueColor) {
-                nextQuestion()
+                quizIndex.current = quizIndex.current === POOL_SIZE - 1 ? 0 : quizIndex.current + 1
+                const newQuiz = quizPool.current[quizIndex.current]
+                setState({
+                    ...state,
+                    score: score + 1,
+                    text: newQuiz.textDisplay,
+                    curQuiz: newQuiz
+                })
             } else {
                 clearTimeout(timeout.current)
                 setState({ ...state, status: "OVER" })
             }
         }
     }
-
-    const nextQuestion = () => {
-        quizIndex.current = quizIndex.current === POOL_SIZE - 1 ? 0 : quizIndex.current + 1
-        const newQuiz = quizPool.current[quizIndex.current]
-        setState({
-            ...state,
-            score: score + 1,
-            text: newQuiz.textDisplay,
-            curQuiz: newQuiz
-        })
-    }
-
 
     return { state, pressTrue, pressFalse, pressAgain }
 }
