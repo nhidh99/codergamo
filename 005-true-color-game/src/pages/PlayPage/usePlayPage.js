@@ -77,16 +77,14 @@ const usePlayPage = () => {
         }
 
         const handleGameOver = () => {
+            const newBest = score > best ? score : best;
+            localStorage.setItem('best', newBest)
             setState({
                 ...state,
                 text: "GAME OVER",
+                best: newBest,
                 curQuiz: null
             })
-
-            if (score > best) {
-                setState({ ...state, best: score })
-                localStorage.setItem('best', score)
-            }
 
             if (timeout.current) {
                 clearTimeout(timeout.current)
