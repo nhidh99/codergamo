@@ -12,12 +12,12 @@ const HomePage = () => {
                 <div className="flex flex-col items-center w-full gap-4">
                     <Link
                         to={PATHS.PLAY}
-                        className="w-1/2 py-2 text-center text-white bg-red-600 rounded animation-ping"
+                        className="w-1/2 py-2 font-bold text-center text-white bg-red-600 rounded animation-ping"
                     >
                         PLAY
                     </Link>
                     <div className="font-bold text-blue-600">
-                        BEST: {parseInt(localStorage.getItem("best") ?? 0)}
+                        BEST : {parseInt(localStorage.getItem("best") ?? 0)}
                     </div>
                 </div>
 
