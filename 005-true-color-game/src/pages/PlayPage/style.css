@@ -1,0 +1,56 @@
+em::after {
+    content: "";
+    height: 6px;
+    display: inline-block;
+    position: fixed;
+    left: 0;
+    background: #1877f2;
+    transition: all;
+}
+
+.underlined-animated::after {
+    animation: underline-animated 2.01s infinite;
+}
+
+@media only screen and (min-width: 640px) {
+    em::after {
+        left: calc(100% / 6);
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    em::after {
+        left: calc(100% / 3);
+    }
+}
+
+@keyframes underline-animated {
+    0% {
+        width: 100%;
+    }
+    100% {
+        width: 0%;
+    }
+}
+
+@media only screen and (min-width: 640px) {
+    @keyframes underline-animated {
+        0% {
+            width: calc(2 * 100% / 3);
+        }
+        100% {
+            width: 0%;
+        }
+    }
+}
+
+@media only screen and (min-width: 768px) {
+    @keyframes underline-animated {
+        0% {
+            width: calc(100% / 3);
+        }
+        100% {
+            width: 0%;
+        }
+    }
+}
