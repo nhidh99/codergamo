@@ -10,10 +10,9 @@ const PlayPage = () => {
     return (
         <>
             {status === "RUNNING" && (
-                <em
-                    key={`em_${score}`}
-                    className="w-full underlined-animated"
-                ></em>
+                <div className="round-time-bar" key={`timer_${score}`}>
+                    <div></div>
+                </div>
             )}
 
             <div className="fixed px-10 pt-8 select-none">

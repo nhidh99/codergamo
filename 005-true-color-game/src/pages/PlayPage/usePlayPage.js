@@ -6,7 +6,7 @@ const COLOR_TEXTS = ["BLACK", "YELLOW", "RED", "GREEN", "BLUE", "PURPLE"]
 const CLASS_TEXTS = ["text-black", "text-yellow-400", "text-red-600", "text-green-600", "text-blue-600", "text-purple-600"]
 const POOL_SIZE = 80
 const COUNTDOWN_MILISECONDS = 1000
-const TIME_OUT_MILISECONDS = 2000
+const TIME_OUT_MILISECONDS = 3100
 
 const usePlayPage = () => {
     const pendingTextIndex = useRef(0)
