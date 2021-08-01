@@ -15,6 +15,7 @@ const PlayPage = () => {
                     className="w-full underlined-animated"
                 ></em>
             )}
+
             <div className="fixed px-10 pt-8 select-none">
                 <div className="font-bold">
                     SCORE : {score}
@@ -22,6 +23,7 @@ const PlayPage = () => {
                     BEST : {best}
                 </div>
             </div>
+
             <div
                 className={`flex flex-col items-center justify-center text-2xl font-bold text-center h-1/2 select-none ${
                     curQuiz?.textColor ?? "text-black"
